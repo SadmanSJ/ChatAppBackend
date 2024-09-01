@@ -7,6 +7,7 @@ export const QueryTypeDef = gql`
     user(filter: UserFilter): User
     users(filter: UserFilter): [User]
     chatRoom(filter: ChatRoomFilter): ChatRoom
+    chatRoomByID(filter: ChatRoomFilter): ChatRoom
     chatRooms(filter: ChatRoomFilter): [ChatRoom]
     chat(filter: ChatFilter): Chat
     chats(filter: ChatFilter, limit: Int): [Chat]

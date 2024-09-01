@@ -56,7 +56,7 @@ ENV NODE_ENV production
 # Run the application as a non-root user.
 USER node
 
-# Copy package.json so that package manager commands can be used.
+# Copy package.json so that package manager commands caan be used.
 COPY package.json .
 
 # Copy the production dependencies from the deps stage and also

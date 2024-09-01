@@ -13,6 +13,10 @@ export const Query = {
     return User.find({ ...args.filter });
   },
 
+  async chatRoomByID(parent: any, args: any, context: any, info: any) {
+    return ChatRoom.findById(args.filter._id);
+  },
+
   async chatRoom(parent: any, args: any, context: any, info: any) {
     return ChatRoom.findOne({ participants: args.filter.participant });
   },
