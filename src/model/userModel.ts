@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema<UserModelIF>(
   {
     name: { type: String, trim: true },
     image: { type: String, trim: true },
-    email: { type: String, trim: true, index: true },
+    email: { type: String, trim: true, index: true, unique: true },
     mobile: { type: String, trim: true, index: true },
     password: { type: String },
     role: { type: String },
