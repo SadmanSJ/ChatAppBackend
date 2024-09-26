@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { ApolloServerPluginLandingPageDisabled } from "@apollo/server/plugin/disabled";
 import { createServer } from "http";
 import express from "express";
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -37,11 +38,15 @@ const wsServer = new WebSocketServer({
 });
 // Save the returned server's info so we can shutdown this server later
 const serverCleanup = useServer({ schema }, wsServer);
-
+const hiddenGraphqlUI =
+  process.env.NODE_ENV === "production"
+    ? ApolloServerPluginLandingPageDisabled()
+    : {};
 // Set up ApolloServer.
 const server = new ApolloServer({
   schema,
   plugins: [
+    hiddenGraphqlUI,
     // Proper shutdown for the HTTP server.
     ApolloServerPluginDrainHttpServer({ httpServer }),
 
@@ -75,6 +80,11 @@ const server = new ApolloServer({
     }),
     expressMiddleware(server)
   );
+
+  app.use("/api/health", (req, res) => {
+    res.sendStatus(200);
+  });
+
   // console.log("origin", origin);
   // Now that our HTTP server is fully set up, we can listen to it.
 
